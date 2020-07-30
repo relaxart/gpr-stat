@@ -1,21 +1,21 @@
 {
-    organization(login: "%login%") {
-        name
-        teams(last: 100) {
+  organization(login: "%login%") {
+    name
+    teams(last: 100) {
+      edges {
+        node {
+          id
+          name
+          members {
             edges {
-                node {
-                    id
-                    name
-                    members {
-                        edges {
-                            node {
-                                id
-                                login
-                            }
-                        }
-                    }
-                }
+              node {
+                id
+                login
+              }
             }
+          }
         }
+      }
     }
+  }
 }

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from github import Github
+from octototoro.github.client import GithubClient
 
 
 def index(request):
@@ -7,5 +7,6 @@ def index(request):
 
 
 def repo(request, owner, name):
-
+    client = GithubClient("")
+    client.get_teams(owner)
     return render(request, 'repo.html', {'repo': repo, 'prs': {}, 'contributors': {}})
