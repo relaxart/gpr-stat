@@ -1,0 +1,56 @@
+{
+    repository(owner: "%owner%", name: "%repo%") {
+        pullRequests(last: 100) {
+            pageInfo {
+                startCursor
+                hasPreviousPage
+            }
+            nodes {
+                title
+                timelineItems(first: 200, itemTypes: [REVIEW_REQUESTED_EVENT, REVIEW_REQUEST_REMOVED_EVENT]) {
+                    nodes {
+                        ... on ReviewRequestedEvent {
+                            __typename
+                            createdAt
+                            requestedReviewer {
+                                ...ReviewerInfo
+                            }
+                        }
+                        ... on ReviewRequestRemovedEvent {
+                            __typename
+                            createdAt
+                            requestedReviewer {
+                                ...ReviewerInfo
+                            }
+                        }
+                        ... on PullRequestReview {
+                            __typename
+                            state
+                            submittedAt
+                            author {
+                                login
+                            }
+                        }
+                        ... on ClosedEvent {
+                            __typename
+                            createdAt
+                        }
+                        ... on MergedEvent {
+                            __typename
+                            createdAt
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fragment ReviewerInfo on RequestedReviewer {
+    ... on User {
+        login
+    }
+    ... on Team {
+        name
+    }
+}
